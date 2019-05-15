@@ -21,7 +21,7 @@ WEBSERVERUSER='apache'
 ##########################################
 ##                                      ##
 ##       DO NOT CHANGE THIS  ...        ##
-##              MOTHER FUCKER           ##
+##                                      ##
 ##                                      ##
 ##########################################
 smartyPackages=https://github.com/smarty-php/smarty/archive/v3.1.33.tar.gz
@@ -36,7 +36,7 @@ CONFIGSFOLDER='configs'
 # must be root for run
 if [ "$UID" -ne "$ROOT_UID" ]
 then
-  echo "Devi essere root per eseguire questo script.\nThis script must be run by system's administrator...not you..asshole! "
+  echo "Devi essere root per eseguire questo script.\nThis script must be run by system's administrator...not you! "
   exit 2
 fi
 
