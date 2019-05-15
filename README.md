@@ -10,3 +10,7 @@ NEWSMARTYDIR='smarty'
 PATHDIRECTORY='test/'  
 PROJECTPATH='test/project'  
 WEBSERVERUSER='apache'  
+
+
+`chmod +x smartySetUp.sh`
+
