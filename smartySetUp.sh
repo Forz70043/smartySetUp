@@ -50,7 +50,7 @@ wget -a logwget $smartyPackages || {
 mv $PACK $NEWPACKNAME
 
 #scompatto la direcotry
-gtar -zxf $NEWPACKNAME
+tar -zxf $NEWPACKNAME
 
 #echo $?>ritorno
 
