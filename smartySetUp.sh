@@ -10,7 +10,7 @@ NEWPACKNAME='smarty.v3.1.33.tar.gz'
 NEWSMARTYDIR='smarty'
 
 ##where you want store smarty
-PATHDIRECTORY='test/'
+PATHTOSTORE='test/'
 
 ## your project path
 PROJECTPATH='test/project'
@@ -22,8 +22,8 @@ WEBSERVERUSER='apache'
 ##                                      ##
 ##       DO NOT CHANGE THIS  ...        ##
 ##                                      ##
-##                                      ##
 ##########################################
+
 smartyPackages=https://github.com/smarty-php/smarty/archive/v3.1.33.tar.gz
 ROOT_UID=0
 PACK='v3.1.33.tar.gz'
@@ -36,7 +36,7 @@ CONFIGSFOLDER='configs'
 # must be root for run
 if [ "$UID" -ne "$ROOT_UID" ]
 then
-  echo "Devi essere root per eseguire questo script.\nThis script must be run by system's administrator...not you! "
+  echo "This script must be run by system's administrator...not you! "
   exit 2
 fi
 
@@ -46,29 +46,63 @@ wget -a logwget $smartyPackages || {
         exit 1
 }
 
-#rinomino la directory
+echo "download...OK"
+
+#rename directory
 mv $PACK $NEWPACKNAME
 
-#scompatto la direcotry
-tar -zxf $NEWPACKNAME
+#extract
+tar -zxf $NEWPACKNAME || {
+	echo "Can't extract! Check tar packages.."
+	exit 4
+}
+#if [ "$?" -ne "0"]
+#then
+#	echo "Can't extract! Check tar packages.."
+#	exit 4
+#fi
 
-#echo $?>ritorno
+echo "extract...OK"
 
+##directory estratta => newsmartydir
 mv $SMARTYDIR $NEWSMARTYDIR
 
-cp -r $NEWSMARTYDIR/libs/* $PATHDIRECTORY
+if [ ! -d "$PATHTOSTORE" ]
+then
+	echo "Create $PATHTOSTORE"
+	mkdir $PATHTOSTORE
+fi
 
-mkdir $PROJECTPATH/smarty
-mkdir $PROJECTPATH/smarty/$CACHEFOLDER
-mkdir $PROJECTPATH/smarty/$CONFIGSFOLDER
+##copy content libs in pathtostore smarty
+cp -r $NEWSMARTYDIR/libs/* $PATHTOSTORE/
 
-mkdir $PROJECTPATH/smarty/$TEMPLATESFOLDER
-mkdir $PROJECTPATH/smarty/$TEMPLATES_CFOLDER
+echo "copied smarty's libs into $PATHTOSTORE" 
 
-chmod 775 $PROJECTPATH/smarty/$TEMPLATES_CFOLDER
-chmod 775 $PROJECTPATH/smarty/$CACHEFOLDER
-chown $WEBSERVERUSER:$WEBSERVERUSER $PROJECTPATH/smarty/$TEMPLATES_CFOLDER
-chown $WEBSERVERUSER:$WEBSERVERUSER $PROJECTPATH/smarty/$CACHEFOLDER
+if [ ! -d "$PROJECTPATH" ]
+then
+	echo "create $PROJECTPATH folder"
+	mkdir $PROJECTPATH
+fi
 
+#mkdir $PROJECTPATH
+mkdir $PROJECTPATH/$CACHEFOLDER
+echo "create $CACHEFOLDER folder"
+
+mkdir $PROJECTPATH/$CONFIGSFOLDER
+echo "create $CONFIGSFOLDER folder"
+
+mkdir $PROJECTPATH/$TEMPLATESFOLDER
+echo "create $TEMPLATESFOLDER folder"
+
+mkdir $PROJECTPATH/$TEMPLATES_CFOLDER
+echo "create $TEMPLATES_CFOLDER folder"
+
+chmod 775 $PROJECTPATH/$TEMPLATES_CFOLDER
+chmod 775 $PROJECTPATH/$CACHEFOLDER
+chown $WEBSERVERUSER:$WEBSERVERUSER $PROJECTPATH/$TEMPLATES_CFOLDER
+chown $WEBSERVERUSER:$WEBSERVERUSER $PROJECTPATH/$CACHEFOLDER
+
+echo "changed owner and permission for $PROJECTPATH/$TEMPLATES_CFOLDER and $PROJECTPATH/$CACHEFOLDER"
 echo "Maybe it's all ok...ENJOY your new framework .."
+
 exit 0
