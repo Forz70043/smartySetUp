@@ -1,5 +1,5 @@
 # smartySetUp
-script that download smarty (v3.1.33) and set up it into your project
+script that download smarty (v3.1.33), extract it and set up into your project.
 
 ## NB
 1)install wget `apt install wget` || `dnf install wget` || ..   
