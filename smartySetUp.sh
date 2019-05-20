@@ -1,16 +1,10 @@
 #!/bin/sh
 
-##log file for wget
-WGET_LOG=wgetLog
-
-## new name for smarty tar
-NEWPACKNAME='smarty.v3.1.33.tar.gz'
-
 ##name of new smarty directory
 NEWSMARTYDIR='smarty'
 
 ##where you want store smarty
-PATHTOSTORE='test/'
+PATHTOSTORE='test'
 
 ## your project path
 PROJECTPATH='test/project'
@@ -26,6 +20,7 @@ WEBSERVERUSER='apache'
 
 smartyPackages=https://github.com/smarty-php/smarty/archive/v3.1.33.tar.gz
 ROOT_UID=0
+UID=`id -u`
 PACK='v3.1.33.tar.gz'
 SMARTYDIR='smarty-3.1.33'
 TEMPLATESFOLDER='templates'
@@ -48,14 +43,12 @@ wget -a logwget $smartyPackages || {
 
 echo "download...OK"
 
-#rename directory
-mv $PACK $NEWPACKNAME
-
 #extract
-tar -zxf $NEWPACKNAME || {
+tar -zxf $PACK || {
 	echo "Can't extract! Check tar packages.."
 	exit 4
 }
+
 #if [ "$?" -ne "0"]
 #then
 #	echo "Can't extract! Check tar packages.."
